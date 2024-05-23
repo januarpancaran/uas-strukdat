@@ -11,11 +11,11 @@ const string password = "atminsudahdatang";
 const int N = 5;
 const string Vertex[N] = {"Gudang 1", "Gudang 2", "Gudang 3", "Gudang 4", "Gudang 5"}; 
 const int Edge[N][N] = {
-    {0, 10, 0, 5, 0},
-    {0, 0, 3, 2, 0},
-    {0, 0, 0, 0, 4},
-    {0, 3, 9, 0, 2},
-    {7, 0, 6, 0, 0},
+    {0, 150, 0, 90, 0},
+    {0, 0, 60, 40, 0},
+    {0, 0, 0, 0, 180},
+    {0, 90, 200, 0, 30},
+    {70, 0, 60, 0, 0},
 };
 
 const int INF = INT_MAX;
@@ -104,6 +104,8 @@ struct LinkedList {
               }
               delete cur;
               found = true;
+              OUT("\n" << delBaju << " telah dihapus dari list");
+              return;
             } else {
                 prev = cur;
                 cur = cur -> next;
@@ -227,11 +229,11 @@ struct LinkedList {
 
 void Jalur(Graph G) {
     int i, j;
-    cout << "\nDaftar Garis (Edge): " << endl;
+    cout << "\nDaftar Jalur yang Tersedia: " << endl;
     for(i = 0; i < N; i++) {
         for(j = 0; j < N; j++) {
             if(G.E[i][j] > 0) {
-                cout << "(" << G.V[i] << ", " << G.V[j] << ") = " << G.E[i][j] << endl;
+                cout << "(" << G.V[i] << ", " << G.V[j] << ") = " << G.E[i][j] << " KM" << endl;
             }
         }
     }
@@ -297,7 +299,7 @@ void Dijkstra(Graph G, int source, int destination) {
     }
 
     // Tampilkan hasil
-    cout << "\nJarak terpendek dari " << G.V[source] << " ke " << G.V[destination] << " adalah " << (P[destination] == INF ? -1 : P[destination]) << endl;
+    cout << "\nJarak terpendek dari " << G.V[source] << " ke " << G.V[destination] << " adalah " << (P[destination] == INF ? -1 : P[destination]) << " KM" << endl;
     if (P[destination] != INF) {
         cout << "Jalur yang dilalui: ";
         for (int i = 0; i < paths[destination].size(); ++i) {
@@ -305,7 +307,6 @@ void Dijkstra(Graph G, int source, int destination) {
             if (i != paths[destination].size() - 1) cout << " -> ";
         }
         cout << endl;
-        // cout << "Bobot Jalur: " << P[destination] << endl;
     }
 }
 
@@ -333,7 +334,19 @@ void backToMenu(char back) {
     OUT("Ketik 'q' untuk kembali ke menu");
     do {
         cin >> back;
+
+        if(cin.fail())
+            cin.clear();
+
     } while(back != 'q');
+}
+
+void clear_screen() {
+    #ifdef _WIN32
+        system("cls");
+    #else 
+        system("clear");
+    #endif
 }
 
 int main() {
@@ -353,7 +366,7 @@ int main() {
 
     // * Show Menu
     while(showMenu) {
-        system("clear");
+        clear_screen();
         OUT("Log In");
         cout << "Username: ";
         cin >> authName;
@@ -366,7 +379,7 @@ int main() {
             
             // ! Initialize Loop
             while(isAuth) {
-                system("clear");
+                clear_screen(); 
                 OUT("\nAplikasi Distributor Baju: ");
                 menu();
                 cout << "\nPilih Menu: ";
@@ -375,7 +388,7 @@ int main() {
 
                 switch(chooseMenu) {
                     case 1:
-                        system("clear");
+                        clear_screen(); 
                         list.print();
                         
                         backToMenu(back);
@@ -383,7 +396,7 @@ int main() {
                         break;
                     
                     case 2:
-                        system("clear");
+                        clear_screen();
                         OUT("Masukkan Data Baju Baru \n");
                         cout << "Masukkan Nama Baju: ";
                         cin.ignore();
@@ -399,7 +412,7 @@ int main() {
                         break;
                     
                     case 3:
-                        system("clear");
+                        clear_screen();   
                         list.print();
                         
                         cout << "Masukkan Nama Baju yang Ingin Diedit: ";
@@ -419,7 +432,7 @@ int main() {
                         break;
 
                     case 4:
-                        system("clear");
+                        clear_screen(); 
                         list.print();
 
                         cout << "Masukkan Nama Baju yang Ingin Dihapus: ";
@@ -437,20 +450,20 @@ int main() {
                         int hurufSort;
                         int rakSort;
 
-                        system("clear");
+                        clear_screen();
                         OUT("1. Urutkan Berdasarkan Huruf");
                         OUT("2. Urutkan Berdasarkan Nomor Rak");
                         cout << "\nPilih Sort: ";
                         cin >> pilihSort;
 
                         if(pilihSort == 1) {
-                            system("clear");
+                            clear_screen();
                             OUT("1. A-Z");
                             OUT("2. Z-A");
                             cout << "\nPilih Sort: ";
                             cin >> hurufSort;
 
-                            system("clear");
+                            clear_screen();      
                             if(hurufSort == 1) {
                                 list.quickSort(list.head, list.findLast(list.head), true, true);
                                 list.print();
@@ -461,14 +474,14 @@ int main() {
                                 OUT("Pilihan tidak tersedia\n");
                             }
                         } else if(pilihSort == 2) {
-                            system("clear");
+                            clear_screen();
                             OUT("1. Nomor rak terkecil");
                             OUT("2. Nomor rak terbesar");
 
                             cout << "\nPilih Sort: ";
                             cin >> rakSort;
 
-                            system("clear");
+                            clear_screen();
                             if(rakSort == 1) {
                                 list.quickSort(list.head, list.findLast(list.head), false, true);
                                 list.print();
@@ -487,7 +500,7 @@ int main() {
                         break;
 
                     case 6: {
-                        system("clear");
+                        clear_screen();
                         list.quickSort(list.head, list.findLast(list.head), true, true);
                         list.print();
 
@@ -501,13 +514,13 @@ int main() {
                             int urutan = 1;
                             while (temp != nullptr) {
                                 if (temp -> namaBaju == cariBaju) {
-                                    system("clear");
+                                    clear_screen();   
                                     OUT(cariBaju << " ditemukan di urutan ke-" << urutan << "\n");
                                     OUT("Nama Baju: " << temp -> namaBaju);
                                     OUT("Nomor Rak: " << temp -> nomorRak);
                                     cout << endl;
                                 }
-                                temp = temp->next;
+                                temp = temp -> next;
                                 urutan++;
                             }
                         } else {
@@ -520,7 +533,7 @@ int main() {
                     }
 
                     case 7: {
-                        system("clear");
+                        clear_screen();
                         Graph G;
                         DataGraph(&G);
                         Jalur(G);
@@ -541,7 +554,7 @@ int main() {
                         cin >> destination;
                         destination--;
 
-                        if(source >= 0 && source <= 5 && destination >= 0 && destination <= 5) 
+                        if(source >= 0 && source < N && destination >= 0 && destination < N) 
                             Dijkstra(G, source, destination);
                         else 
                             OUT("\nPilihan Gudang Tidak Valid");
@@ -566,8 +579,9 @@ int main() {
             // ! Stop the Loop
             showMenu = false;
         } else {
-            OUT("\nUsername atau Password salah");
-            break;
+            OUT("\nUsername atau Password salah\n");
+
+            backToMenu(back);
         }
     }
     return 0;
